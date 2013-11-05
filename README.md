@@ -21,7 +21,7 @@ $ ./newsbot
 ## Configuration
 
 The bot is configured by the newsbot.conf file, which is written in [TOML](https://github.com/mojombo/toml/blob/master/versions/toml-v0.2.0.md),
-a sample of which has been provided in newsbot.conf.example (you'll need to fill
+a sample of which has been provided in newsbot.conf.example (you'll need to copy it to **newsbot.conf** and fill
 in your own data to get it to work). It should be pretty self explanatory if you [know what you're doing](https://dev.twitter.com/apps).  If not, I'll document it later, I promise.  It's just super late right now and I want to get this committed.
 
 ```toml

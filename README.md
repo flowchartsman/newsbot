@@ -40,7 +40,9 @@ Users = [
     362051343, # @breakingstorm
     1068831    # @slashdot
 ]
-Keywords = [
-    "#YOLO",
-]
+# Keywords are temporarily unsupported in order to keep the bandwidth down and
+# because the message culling algorithm currently ignores them.
+#Keywords = [
+#    "#YOLO",
+#]
 ```

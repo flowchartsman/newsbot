@@ -1,0 +1,22 @@
+LogLevel = "debug"
+# Twitter auth settings
+User = "yourusername"
+ConsumerKey = "<consumer key here>"
+ConsumerSecret = "<consumer secret here>"
+OAuthToken = "<OAuth token here>"
+OAuthSecret = "<OAuth secret here>"
+# Twitter users to follow
+Users = [
+    1652541,   # @Reuters
+    51241574,  # @AP
+    18424289,  # @AJELive
+    5402612,   # @BBCBreaking
+    742143,    # @BBCWorld
+    362051343, # @breakingstorm
+    1068831    # @slashdot
+]
+# Keywords are temporarily unsupported in order to keep the bandwidth down and
+# because the message culling algorithm currently ignores them.
+#Keywords = [
+#    "#YOLO",
+#]

@@ -9,7 +9,7 @@ These docs are shitty.  They are also new, and will be less shitty very soon.
 ```bash
 $ git clone https://github.com/anaxagoras/newsbot.git
 $ cd wherever/you/just/put/that
-$ git build
+$ go build
 ```
 
 ## Running

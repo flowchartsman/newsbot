@@ -7,7 +7,9 @@ A twitter streaming, website-scraping<sup>1</sup> IRC posting<sup>2</sup> bot wr
 These docs are shitty.  They are also new, and will be less shitty very soon.
 
 ```bash
-git clone https://github.com/anaxagoras/newsbot.git
+$ git clone https://github.com/anaxagoras/newsbot.git
+$ cd wherever/you/just/put/that
+$ git build
 ```
 
 ## Running

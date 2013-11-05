@@ -3,17 +3,17 @@ package main
 // twitter oauth
 
 import (
-    "github.com/anaxagoras/newsbot/tweet"
+	"fmt"
+	"github.com/BurntSushi/toml"
+	"github.com/anaxagoras/newsbot/tweet"
 	oauth "github.com/araddon/goauth"
 	"github.com/araddon/httpstream"
-    "github.com/BurntSushi/toml"
-    "fmt"
-    "html"
+	"html"
 	"log"
 	"os"
 	//"strconv"
 	//"strings"
-    "encoding/json"
+	"encoding/json"
 	//"flag"
 )
 
@@ -31,22 +31,22 @@ import (
 )*/
 
 var config struct {
-    LogLevel,
-    User,
-    ConsumerKey,
-    ConsumerSecret,
-    OAuthToken,
-    OAuthSecret string
-    Users []int64
-    Keywords []string
+	LogLevel,
+	User,
+	ConsumerKey,
+	ConsumerSecret,
+	OAuthToken,
+	OAuthSecret string
+	Users    []int64
+	Keywords []string
 }
 
 func main() {
 
-    if _, err := toml.DecodeFile("newsbot.conf", &config); err != nil {
-        fmt.Println(err)
-        return
-    }
+	if _, err := toml.DecodeFile("newsbot.conf", &config); err != nil {
+		fmt.Println(err)
+		return
+	}
 
 	//flag.Parse()
 	httpstream.SetLogger(log.New(os.Stdout, "", log.Ldate|log.Ltime|log.Lshortfile), config.LogLevel)
@@ -88,17 +88,17 @@ func main() {
 
 	// find list of userids we are going to search for
 	//userIds := make([]int64, 0)
-    userMap := make(map[int64]bool)
+	userMap := make(map[int64]bool)
 	/*for _, userId := range strings.Split(config.Users, ",") {
-		if id, err := strconv.ParseInt(userId, 10, 64); err == nil {
-			userIds = append(userIds, id)
-            userMap[id] = true
-		}
-	}*/
+			if id, err := strconv.ParseInt(userId, 10, 64); err == nil {
+				userIds = append(userIds, id)
+	            userMap[id] = true
+			}
+		}*/
 
-    for _, id := range config.Users {
-        userMap[id] = true
-    }
+	for _, id := range config.Users {
+		userMap[id] = true
+	}
 
 	/*var keywords []string
 	if search != nil && len(*search) > 0 {
@@ -112,28 +112,28 @@ func main() {
 		go func() {
 			// while this could be in a different "thread(s)"
 			//ct := 0
-            var tweet tweet.Tweet
+			var tweet tweet.Tweet
 			for tw := range stream {
 				//println(string(tw))
-                err := json.Unmarshal(tw, &tweet)
-                if err != nil {
-                    httpstream.Log(httpstream.ERROR, err.Error())
-                } else {
-                    tweet.Text = html.UnescapeString(tweet.Text);
-                    // Tweet parsed
-                    if userMap[tweet.User.Id] { // If the user is in the list, we're interested
-                        if tweet.RetweetedStatus.RetweetCount == 0 { // If retweet_count is 0, this is the original author
-                            fmt.Printf("%s: %s\n", tweet.User.ScreenName, tweet.Text)
-                        } else { //One of our users is retweeting
-                            if !userMap[tweet.RetweetedStatus.User.Id] { //this user is not retweeting one of our other users
-                                fmt.Printf("%s (RT %s): %s\n", tweet.User.ScreenName, tweet.RetweetedStatus.User.ScreenName, tweet.Text)
-                                println(tweet.Text)
-                            }
-                        }
-                    } else {
-                        //println("Bad tweet", tweet.Text)
-                    }
-                }
+				err := json.Unmarshal(tw, &tweet)
+				if err != nil {
+					httpstream.Log(httpstream.ERROR, err.Error())
+				} else {
+					tweet.Text = html.UnescapeString(tweet.Text)
+					// Tweet parsed
+					if userMap[tweet.User.Id] { // If the user is in the list, we're interested
+						if tweet.RetweetedStatus.RetweetCount == 0 { // If retweet_count is 0, this is the original author
+							fmt.Printf("%s: %s\n", tweet.User.ScreenName, tweet.Text)
+						} else { //One of our users is retweeting
+							if !userMap[tweet.RetweetedStatus.User.Id] { //this user is not retweeting one of our other users
+								fmt.Printf("%s (RT %s): %s\n", tweet.User.ScreenName, tweet.RetweetedStatus.User.ScreenName, tweet.Text)
+								println(tweet.Text)
+							}
+						}
+					} else {
+						//println("Bad tweet", tweet.Text)
+					}
+				}
 
 				// heavy lifting
 				//ct++

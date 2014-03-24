@@ -7,7 +7,21 @@ import (
     "path/filepath"
 )
 
+var config struct {
+    Port,
+    LogLevel,
+    User,
+    ConsumerKey,
+    ConsumerSecret,
+    OAuthToken,
+    OAuthSecret string
+    Users []int64
+    Keywords []string
+}
+
+
 var BinPath string;
+
 func init() {
     if _, err := toml.DecodeFile("newsbot.conf", &config); err != nil {
         log.Fatal(err)

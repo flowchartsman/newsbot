@@ -1,37 +1,35 @@
 package main
 
 import (
-    "log"
-    "github.com/anaxagoras/toml"
-    "os"
-    "path/filepath"
+	"github.com/anaxagoras/toml"
+	"log"
+	"os"
+	"path/filepath"
 )
 
 var config struct {
-    Port,
-    LogLevel,
-    User,
-    ConsumerKey,
-    ConsumerSecret,
-    OAuthToken,
-    OAuthSecret string
-    Users []int64
-    Keywords []string
+	Port,
+	LogLevel,
+	User,
+	ConsumerKey,
+	ConsumerSecret,
+	OAuthToken,
+	OAuthSecret string
+	Users    []int64
+	Keywords []string
 }
 
-
-var BinPath string;
+var BinPath string
 
 func init() {
-    if _, err := toml.DecodeFile("newsbot.conf", &config); err != nil {
-        log.Fatal(err)
-    }
-    
-    //TODO: Find a way to actually assign to the global
-    path, err := filepath.Abs(filepath.Dir(os.Args[0]))
-    if err != nil {
-        log.Fatal(err)
-    }
-    BinPath = path
-}
+	if _, err := toml.DecodeFile("newsbot.conf", &config); err != nil {
+		log.Fatal(err)
+	}
 
+	//TODO: Find a way to actually assign to the global
+	path, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	if err != nil {
+		log.Fatal(err)
+	}
+	BinPath = path
+}

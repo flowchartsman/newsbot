@@ -3,12 +3,12 @@ package main
 // twitter oauth
 
 import (
-    "log"
+	"log"
 )
 
-var done =  make(chan bool)
+var done = make(chan bool)
 
 func main() {
-    log.Println("Starting newsbot")
-    <-done
+	log.Println("Starting newsbot")
+	<-done
 }

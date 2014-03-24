@@ -1,13 +1,13 @@
 package main
 
 import (
-    "log"
-    "os"
-    "html"
-    "github.com/anaxagoras/newsbot/tweet"
+	"encoding/json"
+	"github.com/anaxagoras/newsbot/tweet"
 	oauth "github.com/araddon/goauth"
 	"github.com/araddon/httpstream"
-    "encoding/json"
+	"html"
+	"log"
+	"os"
 )
 
 func init() {
@@ -49,17 +49,17 @@ func init() {
 
 	// find list of userids we are going to search for
 	//userIds := make([]int64, 0)
-    userMap := make(map[int64]bool)
+	userMap := make(map[int64]bool)
 	/*for _, userId := range strings.Split(config.Users, ",") {
-		if id, err := strconv.ParseInt(userId, 10, 64); err == nil {
-			userIds = append(userIds, id)
-            userMap[id] = true
-		}
-	}*/
+			if id, err := strconv.ParseInt(userId, 10, 64); err == nil {
+				userIds = append(userIds, id)
+	            userMap[id] = true
+			}
+		}*/
 
-    for _, id := range config.Users {
-        userMap[id] = true
-    }
+	for _, id := range config.Users {
+		userMap[id] = true
+	}
 
 	/*var keywords []string
 	if search != nil && len(*search) > 0 {
@@ -71,38 +71,38 @@ func init() {
 	} else {
 
 		go func() {
-            var tweet tweet.Tweet
+			var tweet tweet.Tweet
 
-            for {
-                select {
-                case tw:= <-stream:
-                    //TODO: put unmarshalling, parsing and vetting into another goroutine
-                    err := json.Unmarshal(tw, &tweet)
-                    if err != nil {
-                        httpstream.Log(httpstream.ERROR, err.Error())
-                    } else {
-                        tweet.Text = html.UnescapeString(tweet.Text);
-                        // Tweet parsed
-                        if userMap[tweet.User.Id] { // If the user is in the list, we're interested
-                            if tweet.RetweetedStatus.RetweetCount == 0 { // If retweet_count is 0, this is the original author
-                                //println(string(tw))
-                                log.Printf("%s: %s %s\n", tweet.User.ScreenName, tweet.Text, tweet.User.ProfileImgURL)
-                                headline := &headlineMsg{tweet.User.ProfileImgURL, tweet.User.ScreenName, "", tweet.Text}
-                                messages <- &wsMsg{ "headline", headline }
-                            } else { //One of our users is retweeting
-                                if !userMap[tweet.RetweetedStatus.User.Id] { //this user is not retweeting one of our other users
-                                    log.Printf("%s (RT %s): %s\n", tweet.User.ScreenName, tweet.RetweetedStatus.User.ScreenName, tweet.Text)
-                                    println(tweet.Text)
-                                }
-                            }
-                        } else {
-                            //println("Bad tweet", tweet.Text)
-                        }
-                    }
-                case <-done:
-                    break;
-                }
-            }
+			for {
+				select {
+				case tw := <-stream:
+					//TODO: put unmarshalling, parsing and vetting into another goroutine
+					err := json.Unmarshal(tw, &tweet)
+					if err != nil {
+						httpstream.Log(httpstream.ERROR, err.Error())
+					} else {
+						tweet.Text = html.UnescapeString(tweet.Text)
+						// Tweet parsed
+						if userMap[tweet.User.Id] { // If the user is in the list, we're interested
+							if tweet.RetweetedStatus.RetweetCount == 0 { // If retweet_count is 0, this is the original author
+								//println(string(tw))
+								log.Printf("%s: %s %s\n", tweet.User.ScreenName, tweet.Text, tweet.User.ProfileImgURL)
+								headline := &headlineMsg{tweet.User.ProfileImgURL, tweet.User.ScreenName, "", tweet.Text}
+								messages <- &wsMsg{"headline", headline}
+							} else { //One of our users is retweeting
+								if !userMap[tweet.RetweetedStatus.User.Id] { //this user is not retweeting one of our other users
+									log.Printf("%s (RT %s): %s\n", tweet.User.ScreenName, tweet.RetweetedStatus.User.ScreenName, tweet.Text)
+									println(tweet.Text)
+								}
+							}
+						} else {
+							//println("Bad tweet", tweet.Text)
+						}
+					}
+				case <-done:
+					break
+				}
+			}
 		}()
-    }
+	}
 }

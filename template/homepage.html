@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+    <head>
+        <title>Newsbot BETA</title>
+        <style type="text/css">
+            body {
+                width: 600px;
+                margin: 0px auto;
+                text-align: center;
+            }
+
+            .tweet {
+                max-width: 100%;
+                border-radius: 15px;
+                margin: 5px;
+                background-color: #CCC;
+            }
+        </style>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+        <!-- If you want to host it yourself, just put it in the static directory
+        <script type="text/javascript" src="jquery.min.js"></script>
+        -->
+        <script type="text/javascript">
+            /*
+            setInterval(function() {
+                var tweet = tweets.shift();
+                if (tweet) {
+                    $(img).hide().
+                    css('max-height', $(window).height() + 'px').
+                    prependTo($('body')).
+                    fadeIn();
+                }
+            }, 5000);
+            */
+            var conn = new WebSocket("ws://{{.}}/ws");
+
+            conn.onclose = function(event) {
+                console.log('closed');
+            };
+            conn.onmessage = function(event) {
+                msg = JSON.parse(event.data);
+
+                switch(msg.Type) {
+                    case 'headline':
+                        $("body").prepend(
+                                "<div class='tweet'>" + 
+                                "<img src='" + msg.Content.Icon + "'/>" +
+                                "<b>" + msg.Content.Source + "</b> " +
+                                msg.Content.Text +
+                                "</div>"
+                            );
+                        break;
+                    case 'alert':
+                        break;
+                }
+            };
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

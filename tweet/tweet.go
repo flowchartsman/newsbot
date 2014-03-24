@@ -12,11 +12,26 @@ type User struct {
 
     // The screen name, handle, or alias that this user identifies themselves with. screen_names are unique but subject to change. Use id_str as a user identifier whenever possible. Typically a maximum of 15 characters long, but some historical accounts may exist with longer names.
     ScreenName string `json:"screen_name"`
+
+    // The url of their profile image
+    ProfileImgURL string `json:"profile_image_url"`
 }
 
 type RetweetedStatus struct {
     RetweetCount int64 `json:"retweeted_count"`
     User User `json:"user"`
+}
+
+type Url struct {
+    Url string `json:"url"`
+    DisplayUrl string `json:"display_url"`
+    ExpandedUrl string `json:"expanded_url"`
+    Indices [2] int `json:"indices"`
+}
+
+type Entities struct {
+    // Urls extracted from the tweet
+    Urls []Url `json:"urls"`
 }
 
 type Tweet struct {
@@ -33,5 +48,8 @@ type Tweet struct {
 
     // The user who posted this Tweet.
     User User `json:"user"`
+
+    // Various entities we might be interested in
+    Entities Entities `json:"entities"`
 }
 

@@ -12,7 +12,6 @@ type subscriber struct {
 	s    bool
 }
 
-
 var (
 	subscriptions = make(chan subscriber)
 	messages      = make(chan *wsMsg, 5)

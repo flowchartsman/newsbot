@@ -6,27 +6,27 @@ type wsMsg struct {
 }
 
 type story struct {
-    Source,
-    Icon,
-    Link,
-    Text string
-    //Pictures []string
+	Source,
+	Icon,
+	Link,
+	Text string
+	//Pictures []string
 }
 
 type alert struct {
 	Text string
 }
 
-func storyMsg (s *story) *wsMsg {
-    return &wsMsg{
-        "story",
-        s,
-    }
+func storyMsg(s *story) *wsMsg {
+	return &wsMsg{
+		"story",
+		s,
+	}
 }
 
-func alertMsg (a *alert) *wsMsg {
-    return &wsMsg{
-        "alert",
-        a,
-    }
+func alertMsg(a *alert) *wsMsg {
+	return &wsMsg{
+		"alert",
+		a,
+	}
 }

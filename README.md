@@ -25,6 +25,7 @@ a sample of which has been provided in newsbot.conf.example (you'll need to copy
 in your own data to get it to work). It should be pretty self explanatory if you [know what you're doing](https://dev.twitter.com/apps).  If not, I'll document it later, I promise. It's not that hard.
 
 ```toml
+Port = ":8080"
 LogLevel = "debug"
 # Twitter auth settings
 User = "yourusername"
@@ -32,6 +33,7 @@ ConsumerKey = "<consumer key here>"
 ConsumerSecret = "<consumer secret here>"
 OAuthToken = "<OAuth token here>"
 OAuthSecret = "<OAuth secret here>"
+
 # Twitter users to follow
 Users = [
     1652541,   # @Reuters
@@ -42,12 +44,26 @@ Users = [
     362051343, # @breakingstorm
     1068831    # @slashdot
 ]
+
 # Keywords are temporarily unsupported in order to keep the bandwidth down and
 # because the message culling algorithm currently ignores them.
 #Keywords = [
 #    "#YOLO",
 #]
-Port = ":8080"
+
+[[scrapers]]
+name = "Mysite"
+# Located in /static
+icon = "mysite.png"
+# Pull it every 5 seconds
+interval = 5
+url = "http://www.my.great.site"
+# We want any anchor of class "story" directly underneath things of class 'article'
+target = ".article > a.story"
+# We don't want any links whose text starts with "Catpics"
+excluder = `^Catpics`
+# This site always puts a link prefix for tracking. We don't want that.
+modifier = `http://links.my.great.site.com/\d+/`
 ```
 ----
 <sup>1</sup>: Complete, but still merging. Watch out for it in the next couple days.

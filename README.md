@@ -1,6 +1,6 @@
 # newsbot
 
-A twitter streaming, website-scraping<sup>1</sup> websocket-streaming news delivery webapp written in golang and JavaScript<sup>2</sup>
+A twitter streaming, website-scraping, websocket-transporting news delivery webapp written in Go and Javascript<sup>1</sup>
 
 ## Installation
 
@@ -66,6 +66,4 @@ excluder = `^Catpics`
 modifier = `http://links.my.great.site.com/\d+/`
 ```
 ----
-<sup>1</sup>: Complete, but still merging. Watch out for it in the next couple days.
-
-<sup>2</sup>: Soon to be dart
+<sup>1</sup>: Soon to be [Dart](https://www.dartlang.org)

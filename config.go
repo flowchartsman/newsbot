@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/anaxagoras/toml"
-	"log"
+    log "github.com/kdar/factorlog"
 	"os"
 	"path/filepath"
 )
@@ -23,13 +23,13 @@ var BinPath string
 
 func init() {
 	if _, err := toml.DecodeFile("newsbot.conf", &config); err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 
 	//TODO: Find a way to actually assign to the global
 	path, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 	BinPath = path
 }

@@ -2,7 +2,7 @@ package main
 
 import (
 	T "html/template"
-	"log"
+    log "github.com/kdar/factorlog"
 	"net/http"
 	"regexp"
 )
@@ -24,12 +24,12 @@ func homeHandler(w http.ResponseWriter, req *http.Request) {
 func init() {
 	homeTemplate, err := T.ParseFiles(BinPath + "/template/homepage.html")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 	home = homeTemplate
 	chttp.Handle("/", http.FileServer(http.Dir(BinPath+"/static/")))
 	http.HandleFunc("/", homeHandler)
 	go func() {
-		log.Fatal(http.ListenAndServe(config.Port, nil))
+		log.Fatalln(http.ListenAndServe(config.Port, nil))
 	}()
 }

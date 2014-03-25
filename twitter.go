@@ -6,8 +6,9 @@ import (
 	oauth "github.com/araddon/goauth"
 	"github.com/araddon/httpstream"
 	"html"
-	"log"
-	"os"
+    log "github.com/kdar/factorlog"
+    //basiclog "log"
+	//"os"
 )
 
 func init() {
@@ -15,7 +16,8 @@ func init() {
 	// we buffer it, to help ensure we aren't backing up twitter or else they cut us off
 	stream := make(chan []byte, 1000)
 
-	httpstream.SetLogger(log.New(os.Stdout, "", log.Ldate|log.Ltime|log.Lshortfile), config.LogLevel)
+    //TODO: httpstream, your logging is unacceptable.  You will have to go soon
+	//httpstream.SetLogger(basiclog.New(os.Stdout, "", basiclog.Ldate|basiclog.Ltime|basiclog.Lshortfile), config.LogLevel)
 
 	httpstream.OauthCon = &oauth.OAuthConsumer{
 		Service:          "twitter",
@@ -67,7 +69,7 @@ func init() {
 	}*/
 	err := client.Filter(config.Users, config.Keywords, []string{"en"}, nil, false, done)
 	if err != nil {
-		httpstream.Log(httpstream.ERROR, err.Error())
+        log.Errorln(err)
 	} else {
 
 		go func() {
@@ -79,19 +81,19 @@ func init() {
 					//TODO: put unmarshalling, parsing and vetting into another goroutine
 					err := json.Unmarshal(tw, &tweet)
 					if err != nil {
-						httpstream.Log(httpstream.ERROR, err.Error())
+                        log.Errorln(err)
 					} else {
 						tweet.Text = html.UnescapeString(tweet.Text)
 						// Tweet parsed
 						if userMap[tweet.User.Id] { // If the user is in the list, we're interested
 							if tweet.RetweetedStatus.RetweetCount == 0 { // If retweet_count is 0, this is the original author
 								//println(string(tw))
-								log.Printf("%s: %s %s\n", tweet.User.ScreenName, tweet.Text, tweet.User.ProfileImgURL)
+								log.Debugf("%s: %s %s\n", tweet.User.ScreenName, tweet.Text, tweet.User.ProfileImgURL)
 								story := &story{tweet.User.ScreenName, tweet.User.ProfileImgURL, "", tweet.Text}
 								messages <- storyMsg(story)
 							} else { //One of our users is retweeting
 								if !userMap[tweet.RetweetedStatus.User.Id] { //this user is not retweeting one of our other users
-									log.Printf("%s (RT %s): %s\n", tweet.User.ScreenName, tweet.RetweetedStatus.User.ScreenName, tweet.Text)
+									log.Debugf("%s (RT %s): %s\n", tweet.User.ScreenName, tweet.RetweetedStatus.User.ScreenName, tweet.Text)
 									println(tweet.Text)
 								}
 							}

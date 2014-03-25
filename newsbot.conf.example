@@ -1,3 +1,4 @@
+Port = ":8080"
 LogLevel = "debug"
 # Twitter auth settings
 User = "yourusername"
@@ -5,6 +6,7 @@ ConsumerKey = "<consumer key here>"
 ConsumerSecret = "<consumer secret here>"
 OAuthToken = "<OAuth token here>"
 OAuthSecret = "<OAuth secret here>"
+
 # Twitter users to follow
 Users = [
     1652541,   # @Reuters
@@ -15,9 +17,23 @@ Users = [
     362051343, # @breakingstorm
     1068831    # @slashdot
 ]
+
 # Keywords are temporarily unsupported in order to keep the bandwidth down and
 # because the message culling algorithm currently ignores them.
 #Keywords = [
 #    "#YOLO",
 #]
-Port = ":8080"
+
+[[scrapers]]
+name = "Mysite"
+# Located in /static
+icon = "mysite.png"
+# Pull it every 5 seconds
+interval = 5
+url = "http://www.my.great.site"
+# We want any anchor of class "story" directly underneath things of class 'article'
+target = ".article > a.story"
+# We don't want any links whose text starts with "Catpics"
+excluder = `^Catpics`
+# This site always puts a link prefix for tracking. We don't want that.
+modifier = `http://links.my.great.site.com/\d+/`

@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/anaxagoras/toml"
-    log "github.com/kdar/factorlog"
+	log "github.com/kdar/factorlog"
 	"os"
 	"path/filepath"
 )

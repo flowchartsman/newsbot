@@ -3,7 +3,7 @@ package main
 // twitter oauth
 
 import (
-    log "github.com/kdar/factorlog"
+	log "github.com/kdar/factorlog"
 )
 
 var done = make(chan bool)

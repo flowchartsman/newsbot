@@ -1,8 +1,8 @@
 package main
 
 import (
+	log "github.com/kdar/factorlog"
 	T "html/template"
-    log "github.com/kdar/factorlog"
 	"net/http"
 	"regexp"
 )

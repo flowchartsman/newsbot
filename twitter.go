@@ -5,9 +5,9 @@ import (
 	"github.com/anaxagoras/newsbot/tweet"
 	oauth "github.com/araddon/goauth"
 	"github.com/araddon/httpstream"
+	log "github.com/kdar/factorlog"
 	"html"
-    log "github.com/kdar/factorlog"
-    //basiclog "log"
+	//basiclog "log"
 	//"os"
 )
 
@@ -16,7 +16,7 @@ func init() {
 	// we buffer it, to help ensure we aren't backing up twitter or else they cut us off
 	stream := make(chan []byte, 1000)
 
-    //TODO: httpstream, your logging is unacceptable.  You will have to go soon
+	//TODO: httpstream, your logging is unacceptable.  You will have to go soon
 	//httpstream.SetLogger(basiclog.New(os.Stdout, "", basiclog.Ldate|basiclog.Ltime|basiclog.Lshortfile), config.LogLevel)
 
 	httpstream.OauthCon = &oauth.OAuthConsumer{
@@ -69,7 +69,7 @@ func init() {
 	}*/
 	err := client.Filter(config.Users, config.Keywords, []string{"en"}, nil, false, done)
 	if err != nil {
-        log.Errorln(err)
+		log.Errorln(err)
 	} else {
 
 		go func() {
@@ -81,7 +81,7 @@ func init() {
 					//TODO: put unmarshalling, parsing and vetting into another goroutine
 					err := json.Unmarshal(tw, &tweet)
 					if err != nil {
-                        log.Errorln(err)
+						log.Errorln(err)
 					} else {
 						tweet.Text = html.UnescapeString(tweet.Text)
 						// Tweet parsed

@@ -12,21 +12,6 @@ type subscriber struct {
 	s    bool
 }
 
-type wsMsg struct {
-	Type    string
-	Content interface{}
-}
-
-type headlineMsg struct {
-	Icon,
-	Source,
-	Link,
-	Text string
-}
-
-type alertMsg struct {
-	Text string
-}
 
 var (
 	subscriptions = make(chan subscriber)

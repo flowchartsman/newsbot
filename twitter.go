@@ -87,8 +87,8 @@ func init() {
 							if tweet.RetweetedStatus.RetweetCount == 0 { // If retweet_count is 0, this is the original author
 								//println(string(tw))
 								log.Printf("%s: %s %s\n", tweet.User.ScreenName, tweet.Text, tweet.User.ProfileImgURL)
-								headline := &headlineMsg{tweet.User.ProfileImgURL, tweet.User.ScreenName, "", tweet.Text}
-								messages <- &wsMsg{"headline", headline}
+                                story := &story{tweet.User.ScreenName, tweet.User.ProfileImgURL, "", tweet.Text}
+                                messages <- storyMsg(story)
 							} else { //One of our users is retweeting
 								if !userMap[tweet.RetweetedStatus.User.Id] { //this user is not retweeting one of our other users
 									log.Printf("%s (RT %s): %s\n", tweet.User.ScreenName, tweet.RetweetedStatus.User.ScreenName, tweet.Text)

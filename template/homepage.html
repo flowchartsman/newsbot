@@ -41,7 +41,7 @@
                 msg = JSON.parse(event.data);
 
                 switch(msg.Type) {
-                    case 'headline':
+                    case 'story':
                         $("body").prepend(
                                 "<div class='tweet'>" + 
                                 "<img src='" + msg.Content.Icon + "'/>" +

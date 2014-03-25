@@ -17,6 +17,7 @@ var config struct {
 	OAuthSecret string
 	Users    []int64
 	Keywords []string
+	Scrapers []Scraper
 }
 
 var BinPath string

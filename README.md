@@ -20,9 +20,9 @@ $ ./newsbot
 
 ## Configuration
 
-The bot is configured by the newsbot.conf file, which is written in [TOML](https://github.com/mojombo/toml/blob/master/versions/toml-v0.2.0.md),
-a sample of which has been provided in newsbot.conf.example (you'll need to copy it to **newsbot.conf** and fill
-in your own data to get it to work). It should be pretty self explanatory if you [know what you're doing](https://dev.twitter.com/apps).  If not, I'll document it later, I promise. It's not that hard.
+The bot is configured by the newsbot.conf file, which is written in [my subset](https://github.com/anaxagoras/toml) of [TOML](https://github.com/mojombo/toml/blob/master/versions/toml-v0.2.0.md), which supports raw strings (for the regexes).  I may yet fork this into a new format in its own right or just bring back TOML once the spec provides similar functionality.
+
+A sample, seen below has been provided in **newsbot.conf.example**, which you'll need to edit and rename to **newsbot.conf** to get it to work. It should be pretty self explanatory if you [know what you're doing](https://dev.twitter.com/apps).  If not, I'll document it later, I promise. It's not that hard.
 
 ```
 Port = ":8080"

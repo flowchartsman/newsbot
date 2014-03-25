@@ -28,10 +28,14 @@ func init() {
 		log.Fatalln(err)
 	}
 
-	//TODO: Find a way to actually assign to the global
 	path, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {
 		log.Fatalln(err)
 	}
 	BinPath = path
+
+	/*
+	   TODO: Sanity checking of config file and directories here. Make sure
+	   /static and /template exist, etc.
+	*/
 }

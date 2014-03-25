@@ -65,5 +65,18 @@ excluder = `^Catpics`
 # This site always puts a link prefix for tracking. We don't want that.
 modifier = `http://links.my.great.site.com/\d+/`
 ```
+
+## Todo
+
+NewsBot "works" in the loosest sense only at the moment.  Links are delivered via webscraped stories, but not rendered. Twitter links are rendered, but not extracted. The "UI" is laughably bad because it was the least important bit until just now.  So, yeah, I have a few things to work on, but now that the first completely-unified and working version is published, work will progress rapidly.  In fact, I'll be surprised if anyone even sees this for very long.
+
+- Integrate RSS feeds
+- Port the Twitter interface to use [twitterstream](https://github.com/darkhelmet/twitterstream)
+- Fix twitter link extraction, and delivery to the UI
+- Make the UI do anything other than completely suck
+- Let users see how many users are logged in (and their "names")
+- Add chat so the users can talk to each other
+- Port the UI to Dart. As long as you're using one new-hotness language, why not use two? This will be the final stage of the project and the most radical change.
+
 ----
 <sup>1</sup>: Soon to be [Dart](https://www.dartlang.org)

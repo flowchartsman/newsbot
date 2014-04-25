@@ -65,7 +65,7 @@ func (s *Scraper) Start() {
 			case <-pullTick.C:
 				s.scrape()
 			case <-cacheTick.C:
-			//    s.cleanCache()
+				s.cleanCache()
 			case <-s.stop:
 				break
 			}

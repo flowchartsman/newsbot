@@ -143,8 +143,8 @@ func (s *Scraper) scrape() {
 		var found bool
 
 		if !s.Unordered {
-			firstTwo[0], _ = items.Slice(0, 0).First().Attr("href")
-			firstTwo[1], _ = items.Slice(1, 1).First().Attr("href")
+			firstTwo[0], _ = items.Slice(0, 1).Attr("href")
+			firstTwo[1], _ = items.Slice(1, 2).Attr("href")
 		}
 
 		items.EachWithBreak(func(i int, sel *goquery.Selection) bool {

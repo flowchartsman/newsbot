@@ -108,8 +108,8 @@ func (s *Scraper) initCache() {
 		   does in the fast-paced world of news.
 		*/
 		if !s.Unordered {
-			s.last[0], _ = items.Slice(0, 0).First().Attr("href")
-			s.last[1], _ = items.Slice(1, 1).First().Attr("href")
+			s.last[0], _ = items.Slice(0, 1).Attr("href")
+			s.last[1], _ = items.Slice(1, 2).Attr("href")
 			log.Trace("Cached first two links for ", s.Url, ": [", s.last[0], "] [", s.last[1], "]")
 		} else {
 			log.Trace("Cacheing unordered source ", s.Url)

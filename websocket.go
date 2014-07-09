@@ -17,8 +17,6 @@ var (
 	messages      = make(chan *wsMsg, 5)
 )
 
-//func sendHeadline
-
 func socketHandler() {
 	conns := make(map[*websocket.Conn]chan bool)
 	for {

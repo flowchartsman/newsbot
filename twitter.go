@@ -11,7 +11,7 @@ import (
 	//"os"
 )
 
-func init() {
+func tweetInit() {
 	// make a go channel for sending from listener to processor
 	// we buffer it, to help ensure we aren't backing up twitter or else they cut us off
 	stream := make(chan []byte, 1000)

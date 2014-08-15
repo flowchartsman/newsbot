@@ -22,8 +22,7 @@ var config struct {
 
 var BinPath string
 
-func init() {
-	log.SetMinMaxSeverity(log.DEBUG, log.PANIC)
+func configInit() {
 	if _, err := toml.DecodeFile("newsbot.conf", &config); err != nil {
 		log.Fatalln(err)
 	}

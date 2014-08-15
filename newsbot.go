@@ -9,7 +9,14 @@ import (
 var done = make(chan bool)
 
 func main() {
+	log.SetMinMaxSeverity(log.DEBUG, log.PANIC)
 	log.Infoln("Starting newsbot")
+
+	configInit()
+	tweetInit()
+	webserverInit()
+	websocketInit()
+
 	//TODO: move the twitter handling code in here, too
 	stories := make(chan *story)
 

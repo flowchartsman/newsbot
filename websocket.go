@@ -46,7 +46,7 @@ func wsHandler(ws *websocket.Conn) {
 	subscriptions <- subscriber{ws, ch, <-ch}
 }
 
-func init() {
+func websocketInit() {
 	go socketHandler()
 	http.Handle("/ws", websocket.Handler(wsHandler))
 }

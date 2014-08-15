@@ -21,7 +21,7 @@ func homeHandler(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
-func init() {
+func webserverInit() {
 	homeTemplate, err := T.ParseFiles(BinPath + "/template/homepage.html")
 	if err != nil {
 		log.Fatalln(err)

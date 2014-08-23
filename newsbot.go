@@ -14,8 +14,8 @@ func main() {
 
 	configInit()
 	tweetInit()
-	webserverInit()
 	websocketInit()
+	webserverInit()
 
 	//TODO: move the twitter handling code in here, too
 	stories := make(chan *story)
@@ -30,7 +30,7 @@ func main() {
 			select {
 			case webstory := <-stories:
 				log.Debugf("Got story %+v", webstory)
-				messages <- storyMsg(webstory)
+				h.broadcast <- storyMsg(webstory)
 			}
 		}
 	}()

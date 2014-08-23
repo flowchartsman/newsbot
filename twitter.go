@@ -90,7 +90,7 @@ func tweetInit() {
 								//println(string(tw))
 								log.Debugf("%s: %s %s\n", tweet.User.ScreenName, tweet.Text, tweet.User.ProfileImgURL)
 								story := &story{tweet.User.ScreenName, tweet.User.ProfileImgURL, "", tweet.Text}
-								messages <- storyMsg(story)
+								h.broadcast <- storyMsg(story)
 							} else { //One of our users is retweeting
 								if !userMap[tweet.RetweetedStatus.User.Id] { //this user is not retweeting one of our other users
 									log.Debugf("%s (RT %s): %s\n", tweet.User.ScreenName, tweet.RetweetedStatus.User.ScreenName, tweet.Text)

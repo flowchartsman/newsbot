@@ -6,6 +6,7 @@ import (
 	"time"
 	//log "github.com/dgrijalva/timber"
 	log "github.com/kdar/factorlog"
+	"sync"
 )
 
 type Scraper struct {
@@ -23,10 +24,11 @@ type Scraper struct {
 	LinkModifier *scraperRegexp
 	Unordered bool
 	//---- Must not be initialized
-	cache  map[string]int64
-	last   [2]string
-	active bool
-	stop   chan struct{}
+	cache     map[string]int64
+	cacheLock *sync.Mutex
+	last      [2]string
+	active    bool
+	stop      chan struct{}
 }
 
 type scraperRegexp struct {
@@ -45,6 +47,8 @@ func (s *Scraper) Start() {
 		log.Warn("Attempt to start an active scraper to ", s.Url)
 		return
 	}
+
+	s.cacheLock = new(sync.Mutex)
 
 	s.active = true
 
@@ -112,7 +116,8 @@ func (s *Scraper) initCache() {
 			s.last[1], _ = items.Slice(1, 2).Attr("href")
 			log.Trace("Cached first two links for ", s.Url, ": [", s.last[0], "] [", s.last[1], "]")
 		} else {
-			log.Trace("Cacheing unordered source ", s.Url)
+			log.Trace("Caching unordered source ", s.Url)
+			s.cacheLock.Lock()
 			items.Each(func(i int, sel *goquery.Selection) {
 				//Extract the text and href of the link
 				link, _ := sel.Attr("href")
@@ -121,6 +126,7 @@ func (s *Scraper) initCache() {
 				log.Trace("\t [", link, "]")
 				s.cache[link] = timestamp
 			})
+			s.cacheLock.Unlock()
 		}
 	}
 }
@@ -149,6 +155,8 @@ func (s *Scraper) scrape() {
 
 		items.EachWithBreak(func(i int, sel *goquery.Selection) bool {
 
+			s.cacheLock.Lock()
+
 			//Extract the text and href of the link
 			text := sel.Text()
 			link, _ := sel.Attr("href")
@@ -164,6 +172,8 @@ func (s *Scraper) scrape() {
 				_, found = s.cache[link]
 				s.cache[link] = timestamp
 			}
+
+			s.cacheLock.Unlock()
 
 			//If we want to exclude certain links, run them against the excluder
 			//TODO: Add support for href-based exclusion
@@ -199,6 +209,7 @@ func (s *Scraper) scrape() {
 }
 
 func (s *Scraper) cleanCache() {
+	s.cacheLock.Lock()
 	log.Debug("Cleaning the cache")
 	now := time.Now().Unix()
 	cleaned := 0
@@ -208,5 +219,6 @@ func (s *Scraper) cleanCache() {
 			delete(s.cache, link)
 		}
 	}
+	s.cacheLock.Unlock()
 	log.Debug("Removed ", cleaned, " entries")
 }

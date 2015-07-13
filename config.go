@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/anaxagoras/toml"
+	"github.com/BurntSushi/toml"
 	log "github.com/kdar/factorlog"
 	"os"
 	"path/filepath"
@@ -15,7 +15,7 @@ var config struct {
 	ConsumerSecret,
 	OAuthToken,
 	OAuthSecret string
-	Users    []int64
+	Users    []int
 	Keywords []string
 	Scrapers []Scraper
 }

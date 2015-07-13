@@ -34,6 +34,6 @@ url = "http://www.my.great.site"
 # We want any anchor of class "story" directly underneath things of class 'article'
 target = ".article > a.story"
 # We don't want any links whose text starts with "Catpics"
-excluder = `^Catpics`
+excluder = '^Catpics'
 # This site always puts a link prefix for tracking. We don't want that.
-modifier = `http://links.my.great.site.com/\d+/`
+modifier = 'http://links.my.great.site.com/\d+/'

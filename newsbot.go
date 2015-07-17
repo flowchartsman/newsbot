@@ -4,6 +4,7 @@ package main
 
 import (
 	log "github.com/kdar/factorlog"
+	"os"
 )
 
 var done = make(chan bool)
@@ -13,12 +14,17 @@ func main() {
 	log.Infoln("Starting newsbot")
 
 	configInit()
-	tweetInit()
+	//tweetInit()
 	websocketInit()
 	webserverInit()
 
-	//TODO: move the twitter handling code in here, too
 	stories := make(chan *story)
+
+	_, err := NewTweetStreamer(stories, config.ConsumerKey, config.ConsumerSecret, config.OAuthToken, config.OAuthSecret, config.Users)
+	if err != nil {
+		log.Error("problem initializing tweetstreamer", err)
+		os.Exit(1)
+	}
 
 	for _, scraper := range config.Scrapers {
 		scraper.Output = stories

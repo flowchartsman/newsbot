@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"github.com/darkhelmet/twitterstream"
 	"html"
 	"net/url"
@@ -123,7 +122,7 @@ func (t *TweetStreamer) connect() error {
 				//log.Errorf(err.Error())
 			} else {
 				tweet := tw.tweet
-				fmt.Println("got tweet", tweet)
+				//fmt.Println("got tweet", tweet)
 				// Tweet parsed
 				if t.followList[tweet.User.IdStr] { // If the user is in the list, we're interested
 					if tweet.RetweetedStatus == nil || //Original user
